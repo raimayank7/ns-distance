@@ -1,4 +1,4 @@
-const CACHE = 'nsl-distance-77c7ad9e17', SHELL = ["/assets/site.css?v=884414b32f", "/assets/site.js?v=45325cf1ca", "/icons/mark-light.webp", "/icons/mark-dark.webp"];
+const CACHE = 'nsl-distance-7ba2e0c644', SHELL = ["/assets/site.css?v=884414b32f", "/assets/site.js?v=f609fe931c", "/icons/mark-light.webp", "/icons/mark-dark.webp"];
 self.addEventListener('install', e => { self.skipWaiting(); e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).catch(() => {})); });
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.indexOf('nsl-') === 0 && k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim())));
 self.addEventListener('fetch', e => {

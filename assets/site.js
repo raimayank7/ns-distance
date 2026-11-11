@@ -50,7 +50,7 @@
   /* one sponsor card, from the shared list. Never the owner's own cards, never rivals of Nivesh Sahayak tools, India-only offers only in India. */
   function sponsor() {
     var slot = d.querySelector('[data-sponsor]');
-    if (!slot || d.body.getAttribute('data-ads') === '0') return;
+    if (!slot || d.body.getAttribute('data-ads') === '0' || root.classList.contains('embed')) return;
     var india = /Calcutta|Kolkata/.test((Intl.DateTimeFormat().resolvedOptions() || {}).timeZone || '');
     var rival = /billing|invoice|accounting|gst software|vyapar|tally|zoho|khatabook|mybillbook/i;
     var promo = '<p class="sp-promo"><a href="https://promo.niveshsahayak.in/" target="_blank" rel="noopener">Want your business on this card? Promote it here →</a></p>';
@@ -72,6 +72,12 @@
   }
 
   root.classList.add('ready');
+
+  /* inside the App's frame: a link to another website opens in a new tab (most sites refuse to show inside a frame) */
+  if (root.classList.contains('embed')) d.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]');
+    if (a && a.host !== location.host && !a.target) { a.target = '_blank'; a.rel = (a.rel ? a.rel + ' ' : '') + 'noopener'; }
+  }, true);
 
   /* fetch the next page when a finger or the mouse rests on its link, so it opens without a wait (never on Save-Data or 2G) */
   var conn = navigator.connection || {}, seen = {};
