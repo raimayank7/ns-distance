@@ -71,6 +71,19 @@
     }).catch(function () {});
   }
 
-  if (!/ready/.test(root.className)) root.className += ' ready';
+  root.classList.add('ready');
+
+  /* fetch the next page when a finger or the mouse rests on its link, so it opens without a wait (never on Save-Data or 2G) */
+  var conn = navigator.connection || {}, seen = {};
+  function warm(e) {
+    var a = e.target.closest && e.target.closest('a[href^="/"]');
+    if (!a || conn.saveData || /2g/.test(conn.effectiveType || '') || seen[a.pathname] || a.pathname === location.pathname) return;
+    seen[a.pathname] = 1;
+    var l = d.createElement('link'); l.rel = 'prefetch'; l.href = a.href; d.head.appendChild(l);
+  }
+  d.addEventListener('pointerenter', warm, true);
+  d.addEventListener('touchstart', warm, { passive: true, capture: true });
+
+  if ('serviceWorker' in navigator && location.protocol === 'https:') window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js').catch(function () {}); });
   if ('requestIdleCallback' in window) requestIdleCallback(sponsor, { timeout: 2500 }); else setTimeout(sponsor, 900);
 })();

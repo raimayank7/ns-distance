@@ -50,7 +50,7 @@ a{color:var(--link);text-underline-offset:2px}a:hover{text-decoration-thickness:
 .crumbs a{color:var(--soft)}
 
 /* hero + search */
-.hero{padding:26px 0 8px}
+.hero{padding-top:26px;padding-bottom:8px}
 .hero p{color:var(--soft);max-width:70ch;margin:.4em 0 0}
 .finder{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:16px;margin:18px 0}
 .finder label{display:block;font-weight:600;font-size:.92rem;margin-bottom:4px}
